@@ -79,3 +79,59 @@ CREATE TABLE carvent.Historial_Mantenimiento (
     costo DECIMAL(10, 2),
     FOREIGN KEY (vehiculo_id) REFERENCES Vehiculos(vehiculo_id)
 );
+
+CREATE TABLE carvent.Modelos (
+    modelo_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    nombre_modelo VARCHAR(50),
+    descripcion TEXT
+);
+
+CREATE TABLE carvent.Opciones_Vehiculo (
+    opcion_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    nombre_opcion VARCHAR(50),
+    descripcion TEXT
+);
+
+CREATE TABLE carvent.Vehiculos_Opciones (
+    vehiculo_id INT,
+    opcion_id INT,
+    PRIMARY KEY (vehiculo_id, opcion_id),
+    FOREIGN KEY (vehiculo_id) REFERENCES Vehiculos(vehiculo_id),
+    FOREIGN KEY (opcion_id) REFERENCES Opciones_Vehiculo(opcion_id)
+);
+
+CREATE TABLE carvent.Proveedores (
+    proveedor_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    nombre_proveedor VARCHAR(100),
+    contacto VARCHAR(100),
+    direccion VARCHAR(255)
+);
+
+CREATE TABLE carvent.Compras (
+    compra_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    vehiculo_id INT,
+    proveedor_id INT,
+    fecha_compra DATE,
+    precio_compra DECIMAL(10,2),
+    FOREIGN KEY (vehiculo_id) REFERENCES Vehiculos(vehiculo_id),
+    FOREIGN KEY (proveedor_id) REFERENCES Proveedores(proveedor_id)
+);
+
+CREATE TABLE carvent.Repuestos (
+    repuesto_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    nombre_repuesto VARCHAR(100),
+    descripcion TEXT,
+    proveedor_id INT,
+    cantidad INT,
+    precio_unitario DECIMAL(10,2),
+    FOREIGN KEY (proveedor_id) REFERENCES Proveedores(proveedor_id)
+);
+
+CREATE TABLE carvent.Servicios (
+    servicio_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    vehiculo_id INT,
+    fecha_servicio DATETIME,
+    descripcion TEXT,
+    costo DECIMAL(10,2),
+    FOREIGN KEY (vehiculo_id) REFERENCES Vehiculos(vehiculo_id)
+);
